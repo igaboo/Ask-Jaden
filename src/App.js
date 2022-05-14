@@ -10,35 +10,29 @@ function App() {
     "Don't even bother asking me another question.",
   ];
 
-  const [answer, setAnswer] = useState("");
-  const [string, setString] = useState("");
-
   const [animate, setAnimate] = useState(false);
-
+  const [answer, setAnswer] = useState("");
   const [response, setResponse] = useState("");
 
   const updateAnswer = (e) => {
-    let copy = string;
+    let copy = answer;
 
-    if (e.length > string.length) {
-      setString(copy + e[e.length - 1]);
+    if (e.length > answer.length) {
+      setAnswer(copy + e[e.length - 1]);
     } else {
-      setString(string.slice(0, e.length - string.length));
+      setAnswer(answer.slice(0, e.length - answer.length));
     }
-
-    setAnswer(e);
   };
 
-  const logString = () => {
+  const displayAnswer = () => {
     setAnimate(true);
-    console.log(answer.length, phrase.length);
-    string.indexOf("...") > -1
-      ? setResponse(string.split("...")[0])
+    answer.indexOf("...") > -1
+      ? setResponse(answer.split("...")[0])
       : setResponse(responses[Math.floor(Math.random() * responses.length)]);
     setTimeout(() => {
       setAnimate(false);
-      setString("");
     }, "5000");
+    setAnswer("");
   };
 
   return (
@@ -54,11 +48,11 @@ function App() {
         onChange={(e) => updateAnswer(e.target.value)}
       ></textarea>
       <p>Now, ask a question. If done correctly, you will get an answer.</p>
-      <textarea type="text" placeholder="Ask Here"></textarea>
-      <button disabled={animate} onClick={logString}>
+      {/* <textarea type="text" placeholder="Ask Here"></textarea> */}
+      <button disabled={animate} onClick={displayAnswer}>
         Ask for answers
       </button>
-      <a href="">Get help</a>
+      <a href="https://github.com/igaboo/Ask-Jaden">Get help</a>
       <h1 className={animate ? "animate" : ""}>{response}</h1>
     </div>
   );
